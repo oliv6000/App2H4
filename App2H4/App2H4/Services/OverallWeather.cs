@@ -4,7 +4,7 @@ using System.Text;
 
 namespace App2H4.Services
 {
-    class OverallWeather
+    public class OverallWeather
     {
         public class Overall
         {
