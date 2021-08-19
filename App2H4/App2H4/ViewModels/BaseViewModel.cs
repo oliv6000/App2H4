@@ -50,14 +50,6 @@ namespace App2H4.ViewModels
             set { SetProperty(ref day5, value); }
         }
 
-
-        string title = string.Empty;
-        public string Title
-        {
-            get { return title; }
-            set { SetProperty(ref title, value); }
-        }
-
         string temp;
         public string Temp
         {

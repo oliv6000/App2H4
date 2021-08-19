@@ -15,13 +15,19 @@ namespace App2H4.ViewModels
         public AboutViewModel()
         {
             BackgroundColor = "#BDFFFF";
+
+            // Her bliver ICommand interfacet brugt til at vi kan lave en comman, som en knap køre, når den bliver trykket på.
             callCW = new Command(() => call_current_weather());
             callSCW = new Command(() => call_searched_city_weather());
+
+            // DeviceDisplay har en masse nyttit information omkring displayet, hvis man vil lave noget til en specifik slaks resolution eller lign.
+            // Her bliver MainDisplayInfoChanged event handleren brugt, som går ind og kalder den her funktion hver gang hvor telefonen rotere.
             DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
         }
 
         private void DeviceDisplay_MainDisplayInfoChanged(object sender, DisplayInfoChangedEventArgs e)
         {
+            // Orientation bliver converteret til en string, så vi kan sammenligne det, og gøre noget specifikt, hvis orientationen er fx. landscape eller portrait.
             if (e.DisplayInfo.Orientation.ToString() == "Landscape")
             {
                 BackgroundColor = "#D0FFFF";
@@ -36,11 +42,14 @@ namespace App2H4.ViewModels
         {
             try
             {
+                // Xamarin.essentials bliver brugt i dette tilfælde til og hente enhedens location
                 var location = Geolocation.GetLastKnownLocationAsync();            
                 if (location != null)
                 {
+                    // henter json date fra openweathers api, hvor det derefter bliver deserialized ind i en class.
                     var json = new WebClient().DownloadString($"https://api.openweathermap.org/data/2.5/forecast?lat={location.Result.Latitude}&lon={location.Result.Longitude}&appid=97d122bde818513159961ab3df1a0527&units=metric");
                     var mylist = JsonConvert.DeserializeObject<OverallWeather.Root>(json);
+                    // Temp og City er binds som er lavet til labels på vores side, og de er defineret i BaseViewModel.cs
                     Temp = mylist.list[0].main.temp.ToString() + "°";
                     City = mylist.city.name;
                     string iconID = mylist.list[0].weather[0].icon;
@@ -50,6 +59,7 @@ namespace App2H4.ViewModels
             }
             catch (Exception)
             {
+                // Her gør vi brug af displayAlert som går ind og laver en popup men den error besked som man har sat.
                 App.Current.MainPage.DisplayAlert("Error", "Your location is currently unavailable.", "OK");
             }
         }
