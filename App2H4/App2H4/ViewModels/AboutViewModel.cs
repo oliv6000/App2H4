@@ -14,24 +14,25 @@ namespace App2H4.ViewModels
     {
         public AboutViewModel()
         {
-            callCW = new Command(async () => call_current_weather());
-            callSCW = new Command(async () => call_searched_city_weather());
+            BackgroundColor = "#BDFFFF";
+            callCW = new Command(() => call_current_weather());
+            callSCW = new Command(() => call_searched_city_weather());
             DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
         }
 
         private void DeviceDisplay_MainDisplayInfoChanged(object sender, DisplayInfoChangedEventArgs e)
         {
-            if (e.DisplayInfo.Orientation.ToString() == "landscape")
+            if (e.DisplayInfo.Orientation.ToString() == "Landscape")
             {
-
+                BackgroundColor = "#D0FFFF";
             }
-            else if (e.DisplayInfo.Orientation.ToString() == "portrait")
+            else if (e.DisplayInfo.Orientation.ToString() == "Portrait")
             {
-
+                BackgroundColor = "#BDFFFF";
             }
         }
 
-        public async void call_current_weather()
+        public void call_current_weather()
         {
             try
             {
@@ -49,11 +50,11 @@ namespace App2H4.ViewModels
             }
             catch (Exception)
             {
-                await App.Current.MainPage.DisplayAlert("Error", "Your location is currently unavailable.", "OK");
+                App.Current.MainPage.DisplayAlert("Error", "Your location is currently unavailable.", "OK");
             }
         }
 
-        public async void call_searched_city_weather()
+        public void call_searched_city_weather()
         {
             try
             {
@@ -68,7 +69,7 @@ namespace App2H4.ViewModels
             }
             catch (Exception)
             {
-                await App.Current.MainPage.DisplayAlert("Error", City + " is not a city", "OK");
+                App.Current.MainPage.DisplayAlert("Error", City + " is not a city", "OK");
             }
 
         }
@@ -99,6 +100,9 @@ namespace App2H4.ViewModels
                             break;
                         case 5:
                             Day5 = forecastDay.DayOfWeek.ToString() + " --> " + item.main.temp + "°";
+                            break;
+                        default:
+                            App.Current.MainPage.DisplayAlert("Error", "Something went wrong, while trying to temperature for the comming days.", "OK");
                             break;
                     }
                 }

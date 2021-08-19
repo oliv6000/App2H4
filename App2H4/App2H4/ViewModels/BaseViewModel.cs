@@ -79,11 +79,11 @@ namespace App2H4.ViewModels
             set { SetProperty(ref icon, value); }
         }
 
-        StackLayout stacklayout;
-        public StackLayout Stacklayout
+        string backgroundColor;
+        public string BackgroundColor
         {
-            get { return stacklayout; }
-            set { SetProperty(ref stacklayout, value); }
+            get { return backgroundColor; }
+            set { SetProperty(ref backgroundColor, value); }
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
