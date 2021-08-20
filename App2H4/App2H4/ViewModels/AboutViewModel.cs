@@ -17,8 +17,8 @@ namespace App2H4.ViewModels
             BackgroundColor = "#BDFFFF";
 
             // Her bliver ICommand interfacet brugt til at vi kan lave en comman, som en knap køre, når den bliver trykket på.
-            callCW = new Command(() => call_current_weather());
-            callSCW = new Command(() => call_searched_city_weather());
+            callCW = new Command(call_current_weather);
+            callSCW = new Command(call_searched_city_weather);
 
             // DeviceDisplay har en masse nyttit information omkring displayet, hvis man vil lave noget til en specifik slaks resolution eller lign.
             // Her bliver MainDisplayInfoChanged event handleren brugt, som går ind og kalder den her funktion hver gang hvor telefonen rotere.
